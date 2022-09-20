@@ -26,17 +26,12 @@ async function fetchApi(path) {
       path,
       options
     })
-
+    if (!response) return null
     const {
-      result, // Status for old API(?)
       code, // Status for new API(?)
       payload
     } = response
-
-    if (
-      (result && result.toUpperCase() !== 'OK') ||
-      (code && code.toUpperCase() !== 'OPERATION-OK')
-    ) {
+    if (code && code.toUpperCase() !== 'OPERATION-OK') {
       throw new Error(response)
     }
 
@@ -100,7 +95,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
 }
 
 export const getQuickMatch = matchId =>
-  fetchApiMemoized(`/core/v1/matches/${matchId}?withStats=true`)
+  fetchApiMemoized(`/match/v2/matches/${matchId}?withStats=true`)
 
 export const getMatch = matchId =>
   fetchApiMemoized(`/match/v2/match/${matchId}`)

@@ -82,9 +82,9 @@ export default async parent => {
   }
 
   parent = document.querySelector('#parasite-container').shadowRoot
-  const factionNameElement1 = parent.querySelectorAll('h6.sc-iHLYve')[1]
+  const factionNameElement1 = parent.querySelectorAll('h6')[1]
 
-  const factionNameElement2 = parent.querySelectorAll('h6.sc-iHLYve')[0]
+  const factionNameElement2 = parent.querySelectorAll('h6')[0]
 
   // Let eloElements = factions.map((faction, i) => {
   factions.filter((faction, i) => {

@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
+import { getPlayer, getPlayerMatches } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'
 import {
   getPlayerProfileNickname,
@@ -11,7 +11,6 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
@@ -46,8 +45,6 @@ export default async parentElement => {
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
   const player = await getPlayer(nickname)
-  const self = await getSelf()
-  const selfIsFreeMember = getIsFreeMember(self)
 
   const matches = await getPlayerMatches(
     player.id,
@@ -89,10 +86,6 @@ export default async parentElement => {
     const resultElement = select('td:nth-child(3) span', matchElement)
 
     resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff})`
-
-    if (selfIsFreeMember) {
-      return
-    }
 
     const newEloElement = (
       <div
